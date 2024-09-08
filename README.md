@@ -22,64 +22,87 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# NestJS Backend Application
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a simple backend application built with NestJS, Sequelize, and MySQL. It includes JWT authentication and basic CRUD operations for a user entity.
 
-## Project setup
+## Getting Started
 
-```bash
-$ npm install
-```
+Follow these instructions to set up and run the application on your local machine.
 
-## Compile and run the project
+### Prerequisites
 
-```bash
-# development
-$ npm run start
+- Node.js (version 20.10.0)
+- MySQL server
 
-# watch mode
-$ npm run start:dev
+### Installation
 
-# production mode
-$ npm run start:prod
-```
+1. **Clone the repository:**
+   git clone https://github.com/yourusername/nestjs-backend.git
 
-## Run tests
+2. Navigate to the project directory:
+   cd nestjs-backend
 
-```bash
-# unit tests
-$ npm run test
+3. Install dependencies:
+   npm install
 
-# e2e tests
-$ npm run test:e2e
+4. Create a .env file:
+   Copy the example .env file and update the values with your own configuration:
+   cp .env.example .env
 
-# test coverage
-$ npm run test:cov
-```
+Edit the .env file with your MySQL password and JWT secret:
+JWT_SECRET=SuperSecretKey12345
+MYSQL_PASSWORD=Your_password
 
-## Resources
+5. Start the application:
+   npm run start
 
-Check out a few resources that may come in handy when working with NestJS:
+## API Endpoints
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### POST /api/v1/add-user - Create a new user
 
-## Support
+Request Body:
+{
+"name": "John Doe",
+"email": "john.doe@example.com",
+"phone": "+1234567890"
+}
+Response:
+{
+"id": 1,
+"name": "John Doe",
+"email": "john.doe@example.com",
+"phone": "+1234567890",
+"password": "$2b$10$RQLjXjT7O4ybpULUVsruyOjr3WKql412LTlIA8iBQJ1q7tvZhVqP.",
+"updatedAt": "2024-09-08T08:29:35.280Z",
+"createdAt": "2024-09-08T08:29:35.280Z"
+}
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### GET /api/v1/get-user/:id - Retrieve a user by ID
 
-## Stay in touch
+Response:
+{
+"id": 1,
+"name": "John Doe",
+"email": "john.doe@example.com",
+"phone": "+1234567890"
+}
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### GET /api/v1/auth/login - Get an authorization token
 
-## License
+Request Body:
+{
+"name": "John Doe",
+"password": "123456"
+}
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Response:
+{
+"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNzI1Nzg0OTE5LCJleHAiOjE3MjU3ODUwOTl9.Rti5beM8al47qloanRzu6vqzT-Ac_MR0Z4AnfTMsuxw"
+}
+
+## Authentication
+
+To access protected routes, include a JWT token in the Authorization header of your requests:
+
+Authorization: Bearer <your_jwt_token>
